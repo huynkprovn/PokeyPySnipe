@@ -1,0 +1,219 @@
+<html>
+
+<head>
+    <title>PokeyPySnipe Dashboard</title>
+
+    <script type=text/javascript>
+        function updateStatus() {
+            document.getElementById('status').innerHTML = ('<center><font size=4 color=Orange><b>Attempting to snipe Pokemon. This may take some time.</center></font></b>');
+        }
+        // attach handlers once iframe is loaded
+    </script>
+
+    <style>
+    input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type=submit] {
+            width: 250px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+        
+        .main {
+            position: relative;
+            width: 200px;
+            margin: 0 auto;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            top: 100px;
+        }
+        
+        .square:hover {
+            transition: box-shadow .25s;
+            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        
+        .square {
+            width: 110px;
+            height: 150px;
+            padding: 10px;
+            position: relative;
+            margin: 10px;
+            float: left;
+            border: 1px solid;
+            font-family: arial;
+            align: center;
+            background: radial-gradient(ellipse at center, rgba(85, 26, 139, .4) 0, rgba(255, 255, 255, .18) 54%, rgba(255, 255, 255, 0) 100%);
+            box-shadow: 0 3px 50px 0 rgba(0, 0, 0, 0.08), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
+        }
+    }
+    #all {
+        width: 100%;
+        float: left;
+        text-align: center;
+    }
+    .inventory {
+        left: 5%;
+        width: 90%;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .topNav {
+        height: 30px;
+        width: 100%;
+        background-color: darkgreen;
+        position: absolute;
+        top: 10px;
+        font-size: 17px;
+        color: white;
+        padding-left: 50px;
+        line-height: 30px;
+    }
+    a {
+        color: white;
+        text-decoration: none;
+    }
+    </style>
+
+
+</head>
+
+
+<body>
+    <div class="topNav"><a href="http://localhost:5100">Snipe</a>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="/inventory">Pokemon Manager</a></div>
+
+    <div class="inventory" id="inventory">
+        <br><br>
+        <Center>
+            <font face="arial" size=4>Your Pokemon</font>
+			<br><form action="http://localhost:5100/release"><input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon"></form>
+			</center><br>
+
+        <br><br>
+    </div>
+
+
+    <script type="text/javascript">
+        <!--
+		var selectedPokes = []
+        function loadJSON(path, success, error) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        if (success)
+                            success(JSON.parse(xhr.responseText));
+                    } else {
+                        if (error)
+                            error(xhr);
+                    }
+                }
+            };
+            xhr.open("GET", path, true);
+            xhr.send();
+        }
+
+        function sortByKey(array, key) {
+            return array.sort(function(a, b) {
+                var x = a[key];
+                var y = b[key];
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            });
+        }
+
+        function selectPoke(id) {
+		if (selectedPokes.indexOf(id.parentElement.id) == -1) {
+		selectedPokes.push(id.parentElement.id);
+		
+		} else {
+			 array.splice(selectedPokes.indexOf(id.parentElement.id), 1);
+			}
+		
+		
+            //alert(id.parentElement.id);
+            id.parentElement.style.background = 'radial-gradient(ellipse at center,rgba(255,51,51,1) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%)';
+		for (var id in selectedPokes) {
+		//alert(selectedPokes[id]);
+		}
+		document.getElementById("pokeID").value = selectedPokes;
+
+		//alert(selectedPokes);
+
+        }
+
+        function sculpt(data) {
+            sortByKey(data, 'pokemon_name')
+
+
+
+
+            /*
+                #id: 2436312686824190668
+                #pokemon_id: EEVEE
+                #cp: 46
+                #stamina: 19
+                #stamina_max: 19
+                #move_1: TACKLE_FAST
+                #move_2: DIG
+                #height_m: 0.297532558441
+                #weight_kg: 8.24643802643
+                #individual_attack: 15
+                #individual_defense: 12
+                #individual_stamina: 9
+                #cp_multiplier: 0.166397869587
+                #pokeball: ITEM_POKE_BALL
+                #captured_cell_id: 6108423709528162304
+                #creation_time_ms: 1469364470778
+            	*/
+
+
+            for (var i in data) {
+
+
+                var content = document.createElement('div');
+                content.className = 'square hoverable';
+                content.id = data[i].id;
+                content.innerHTML = '<font face=arial size=4><b> ' + data[i].cp + '</b></font><img onclick=\"javascript:selectPoke(this);\" height=100 width=100 src=static/avatars/' + data[i].pokemon_id + '.png>\
+	<font size=2 face=arial>' + data[i].pokemon_name + '</font>\
+	<br>'
+                    /*<a href=/release?pokeID=' + data[i].id + '>Transfer Pokemon</a>\*/
+
+
+                document.getElementById('inventory').appendChild(content);
+
+            }
+
+        }
+        var url = "/static/inventory.json?" + new Date().getTime();
+        loadJSON(url,
+            function(data) {
+                sculpt(data);
+            },
+            function(xhr) {
+                console.error(xhr);
+            }
+        );
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+dumps
+*.pyc
+venv
+libencrypt.so
+encrypt.dll
