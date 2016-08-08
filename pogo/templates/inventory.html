@@ -2,6 +2,14 @@
 
 <head>
     <title>PokeyPySnipe Dashboard</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 
     <script type=text/javascript>
         function updateStatus() {
@@ -54,7 +62,7 @@
         
         .square {
             width: 110px;
-            height: 150px;
+            height: 300px;
             padding: 10px;
             position: relative;
             margin: 10px;
@@ -62,7 +70,7 @@
             border: 1px solid;
             font-family: arial;
             align: center;
-            background: radial-gradient(ellipse at center, rgba(85, 26, 139, .4) 0, rgba(255, 255, 255, .18) 54%, rgba(255, 255, 255, 0) 100%);
+            background: radial-gradient(ellipse at top, rgba(153, 204, 205, .4) 0, rgba(255, 255, 255, .18) 54%, rgba(255, 255, 255, 0) 100%);
             box-shadow: 0 3px 50px 0 rgba(0, 0, 0, 0.08), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
         }
     }
@@ -74,23 +82,41 @@
     .inventory {
         left: 5%;
         width: 90%;
+        top: 200px;
+        position: absolute;
         height: 100%;
         margin: 0 auto;
+        border: 1px solid;
+        box-shadow: 0 3px 50px 0 rgba(0, 0, 0, 0.08), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
     }
     .topNav {
-        height: 30px;
+        height: 100px;
         width: 100%;
         background-color: darkgreen;
-        position: absolute;
+        position: relative;
         top: 10px;
-        font-size: 17px;
+        font-size: 30px;
+        font-family: arial;
         color: white;
-        padding-left: 50px;
-        line-height: 30px;
+        display: table;
+    }
+    .topNavCenter {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+    p.center {
+        vertical-align: middle;
+        top: 10%;
+        color: black;
+        text-align: center;
     }
     a {
         color: white;
         text-decoration: none;
+    }
+    progress {
+        width: 80px;
     }
     </style>
 
@@ -99,22 +125,43 @@
 
 
 <body>
-    <div class="topNav"><a href="http://localhost:5100">Snipe</a>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="/inventory">Pokemon Manager</a></div>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+
+    <nav>
+        <div class="nav-wrapper  indigo lighten-2">
+            <a href="#" class="brand-logo center">PokeyPySnipe</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="http://localhost:5100/">Snipe</a></li>
+                <li><a href="http://localhost:5100/inventory/">PokeManager</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
 
     <div class="inventory" id="inventory">
         <br><br>
         <Center>
-            <font face="arial" size=4>Your Pokemon</font>
-			<br><form action="http://localhost:5100/release"><input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon"></form>
-			</center><br>
 
+            <form action="http://localhost:5100/release"><input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon"></form>
+            <br>
+            <font face="arial" size=8>Your Pokemon</font>
+            <br>
+        </center>
         <br><br>
     </div>
 
 
     <script type="text/javascript">
         <!--
-		var selectedPokes = []
+        var party = []
+
+        var selectedPokes = []
+
+
         function loadJSON(path, success, error) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
@@ -141,32 +188,48 @@
         }
 
         function selectPoke(id) {
-		if (selectedPokes.indexOf(id.parentElement.id) == -1) {
-		selectedPokes.push(id.parentElement.id);
-		
-		} else {
-			 array.splice(selectedPokes.indexOf(id.parentElement.id), 1);
-			}
-		
-		
-            //alert(id.parentElement.id);
-            id.parentElement.style.background = 'radial-gradient(ellipse at center,rgba(255,51,51,1) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%)';
-		for (var id in selectedPokes) {
-		//alert(selectedPokes[id]);
-		}
-		document.getElementById("pokeID").value = selectedPokes;
+            if (selectedPokes.indexOf(id.parentElement.id) == -1) {
+                selectedPokes.push(id.parentElement.id);
+                id.parentElement.style.background = 'radial-gradient(ellipse at top,rgba(255,51,51,1) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%)';
 
-		//alert(selectedPokes);
+            } else {
+                selectedPokes.splice(selectedPokes.indexOf(id.parentElement.id), 1);
+                id.parentElement.style.background = 'radial-gradient(ellipse at top, rgba(153,204,205, .4) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%)';
+            }
+
+
+
+
+            for (var id in selectedPokes) {
+                //debug
+            }
+
+
+            //push selected pokemon to hidden text field for transmittal to python script
+            document.getElementById("pokeID").value = selectedPokes;
+
+
 
         }
 
         function sculpt(data) {
-            sortByKey(data, 'pokemon_name')
+
+            party = data;
+            //default sort is by CP
+
+            sortPokes('cp');
+        }
 
 
 
+        //sort pokemon by id,pokemon_id,cp,stamina,stamina_max,move_1,move_2,etc.
+        function sortPokes(key) {
 
-            /*
+            document.getElementById('inventory').innerHTML = origInventory;
+            sortByKey(party, key);
+
+            /*	SAMPLE POKEMON INFO FOR FORMATTING HELP
+			
                 #id: 2436312686824190668
                 #pokemon_id: EEVEE
                 #cp: 46
@@ -186,23 +249,21 @@
             	*/
 
 
-            for (var i in data) {
-
-
+            for (var i in party) {
                 var content = document.createElement('div');
                 content.className = 'square hoverable';
-                content.id = data[i].id;
-                content.innerHTML = '<font face=arial size=4><b> ' + data[i].cp + '</b></font><img onclick=\"javascript:selectPoke(this);\" height=100 width=100 src=static/avatars/' + data[i].pokemon_id + '.png>\
-	<font size=2 face=arial>' + data[i].pokemon_name + '</font>\
+                content.id = party[i].id;
+                content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img onclick=\"javascript:selectPoke(this);\" height=100 width=100 src=static/avatars/' + party[i].pokemon_id + '.png>\
+	<font size=2 face=arial><center>' + party[i].pokemon_name + '</font><br><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress></center>\
 	<br>'
-                    /*<a href=/release?pokeID=' + data[i].id + '>Transfer Pokemon</a>\*/
+
 
 
                 document.getElementById('inventory').appendChild(content);
 
             }
-
         }
+        var origInventory = document.getElementById('inventory').innerHTML;
         var url = "/static/inventory.json?" + new Date().getTime();
         loadJSON(url,
             function(data) {

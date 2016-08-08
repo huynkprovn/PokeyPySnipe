@@ -2,7 +2,13 @@
 
 <head>
     <title>PokeyPySnipe Dashboard</title>
-    
+     <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script type=text/javascript>
         function updateStatus() {
             document.getElementById('status').innerHTML = ('<center><font size=4 color=Orange><b>Attempting to snipe Pokemon. This may take some time.</center></font></b>');
@@ -14,17 +20,18 @@
     <style>
         input[type=text],
         select {
-            width: 100%;
+            width: 10%;
             padding: 12px 20px;
             margin: 8px 0;
             display: inline-block;
             border: 1px solid #ccc;
             border-radius: 4px;
+			background-color:white;
             box-sizing: border-box;
         }
         
         input[type=submit] {
-            width: 100%;
+            width: 10%;
             background-color: #4CAF50;
             color: white;
             padding: 14px 20px;
@@ -40,7 +47,7 @@
         
         .main {
 		position:relative;
-            width: 200px;
+            width: 80%;
             margin: 0 auto;
             border-radius: 5px;
             background-color: #f2f2f2;
@@ -104,12 +111,27 @@ color:white;
 
 
 <body>
-<div class="topNav"><a href="http://localhost:5100">Snipe</a>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <a href="http://localhost:5100/inventory">Pokemon Manager</a></div>
+<!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+	    
+		
+		<nav>
+    <div class="nav-wrapper  indigo lighten-2">
+      <a href="#" class="brand-logo center">PokeyPySnipe</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="http://localhost:5100/">Snipe</a></li>
+        <li><a href="http://localhost:5100/inventory/">PokeManager</a></li>
+        
+      </ul>
+    </div>
+  </nav>
+        
     <div class="main">
         <center>
             <form action="http://localhost:5100/_snipe_">
 
-                <font face="arial" size=3><b>PokeyPySnipe</font></b>
+                <font face="arial" size=7><b>Snipe</font></b>
                     <br>
                     <br>
                     <br>

@@ -73,7 +73,7 @@ def release():
     pokeID = request.args.get('pokeID', 0)
     
     
-    logging.critical(pokeID)
+    
     for z in pokeID.split(","):
         
     
@@ -171,12 +171,13 @@ def getProfile(session):
 def findBestPokemon(session,config,firstTry,pokemonName):
     # Get Map details and print pokemon
     logging.info("Finding Nearby Pokemon:")
+    logging.info("Due to recent request throttling, we have to wait 10 sec here to be sure that we get a populated getMapObjects.")
+    time.sleep(10)
     cells = session.getMapObjects()
     closest = float("Inf")
     best = -1
     pokemonBest = None
-    logging.info("Due to recent request throttling, we have to wait 5 sec here.")
-    time.sleep(5)
+   
     latitude, longitude, _ = session.getCoordinates()
     logging.info("Current pos: %f, %f" % (latitude, longitude))
     for cell in cells.map_cells:
