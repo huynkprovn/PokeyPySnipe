@@ -163,8 +163,9 @@
 			<option value="iv">Pokemon IV</option>
 			</select>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon"></form>
+			<input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon" name="action"> <input type=submit value="Evolve Selected Pokemon" name="action"></form>
             
+			
         </center>
         <br>
 		</div>
@@ -284,7 +285,7 @@
                 content.className = 'square hoverable';
                 content.id = party[i].id;
                 content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img onclick=\"javascript:selectPoke(this);\" height=100 width=100 src=static/avatars/' + party[i].pokemon_id + '.png>\
-	<font size=2 face=arial><center>' + party[i].pokemon_name + '</font><br><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress></center>\
+	<font size=2 face=arial><center>' + party[i].pokemon_name + '<br>Candies: ' + party[i].candies + '</font><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress></center>\
 	<br>'
 
 
