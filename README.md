@@ -23,9 +23,9 @@ Instructions
 
 - Open Command Prompt/Terminal/equivalent
 - Navigate to the root of the PokeyPySnipe directory
-- Run ```pip install -r requirements.txt``` 
+- Run ```pip install -r requirements.txt```
 - Navigate to the ```pogo``` directory
-- Edit ```config.ini.example``` with your options and rename to ```config.ini```
+- Duplicate ```config.ini.example``` and rename it to ```config.ini```, edit it with your options
 - Run ```python snipe.py```
 - Open http://127.0.0.1:5100 in your browser
 
