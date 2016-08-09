@@ -9,6 +9,8 @@ Instructions:
 
 >If you get an error 'failed to build xxhash' while installing requirements.txt, please install this file and try again: http://www.microsoft.com/en-us/download/details.aspx?id=44266
 
+- Duplicate \pogo\config.ini.sample and rename it as config.ini
+
 - Edit \pogo\config.ini with your information:
 ```
 [AUTH]
@@ -33,4 +35,4 @@ Screenshots of the tool: http://imgur.com/a/TlXyx
 
 ###CREDIT TO https://github.com/rubenvereecken/pokemongo-api for providing the API for this repo###
 
-#HUGE THANKS# ##TO ALL OF THE DEVS THAT WORKED ON THE UNKNOWN6 issue. Encrypt dll/so from http://pgoapi.com/ 
+#HUGE THANKS# ##TO ALL OF THE DEVS THAT WORKED ON THE UNKNOWN6 issue. Encrypt dll/so from http://pgoapi.com/
