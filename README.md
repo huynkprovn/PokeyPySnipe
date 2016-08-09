@@ -1,121 +1,35 @@
-# Pokemon Go API for Python
 
-## Installation
+This snipe tool will allow you to capture rare pokemon from across the world without being soft banned. It works by teleporting to the location of the pokemon, engaging it, teleporting back to your starting position, and then capturing it. This does NOT trigger a soft ban.
 
-We do not yet have this installable as a pip package,
-though some headway has been made.
-Clone this or use this however you like.
+Instructions:
 
-*Important note*: `libencrypt.so` or `encrypt.dll` is needed in order for this to work.
+- Install python 2.7.12 from here: https://www.python.org/downloads/
 
-## Features
+- After install, copy requirements.txt to c:\python27\scripts, open command prompt and type pip install -r requirements.txt
 
-Our current implementaion covers most of the basics of gameplay. The following methods are availible:
+>If you get an error 'failed to build xxhash' while installing requirements.txt, please install this file and try again: http://www.microsoft.com/en-us/download/details.aspx?id=44266
 
+- Edit \pogo\config.ini with your information:
 ```
-# Get profile
-def getProfile(self):
+[AUTH]
+ type = ptc or google
+ username = username
+ password = password
 
-# Get Location
-def getMapObjects(self, radius=10):
-
-# Spin a pokestop
-def getFortSearch(self, fort):
-
-# Get encounter
-def encounterPokemon(self, pokemon):
-
-# Upon Encounter, try and catch
-def catchPokemon(self, pokemon, pokeball=1):
-
-# Evolve Pokemon
-def evolvePokemon(self, pokemon):
-
-# Transfer Pokemon
-def releasePokemon(self, pokemon):
-
-# Throw away items
-def recycleItem(self, item_id, count):
-
-# set an Egg into an incubator
-def setEgg(self, item, pokemon):
-
-# Get Eggs
-def getEggs(self):
-
-# Get Inventory
-def getInventory(self):
-
-# Get Badges
-def getBadges(self):
-
-# Get Settings
-def getDownloadSettings(self):
-```
-Every method has been tested. Pull requests are encouraged.
-
-## Demo
-`demo.py` includes a demo of the API.
-
-```
-➜  python demo.py -a "google" -u "email@gmail.com" -p "thepassword" -l "The Atlantic Ocean"
-
-2016-07-17 16:26:59,947 - INFO - Creating Google session for email@gmail.com
-2016-07-17 16:26:59,953 - INFO - Starting new HTTPS connection (1): android.clients.google.com
-2016-07-17 16:27:00,362 - INFO - Starting new HTTPS connection (1): android.clients.google.com
-2016-07-17 16:27:00,789 - INFO - Location: The Atlantic Ocean
-2016-07-17 16:27:00,789 - INFO - Coordinates: 51.01 7.12 0.0
-2016-07-17 16:27:00,793 - INFO - Starting new HTTPS connection (1): pgorelease.nianticlabs.com
-2016-07-17 16:27:01,633 - INFO - creation_time: 3341800000
-team: 3
-avatar {
-  hair: 1
-  shirt: 1
-  pants: 1
-  hat: 1
-  shoes: 1
-  eyes: 1
-  backpack: 1
-}
-max_pokemon_storage: 250
-max_item_storage: 400
-daily_bonus {
-  next_defender_bonus_collect_timestamp_ms: 4106877052
-}
-currency {
-  type: "STARDUST"
-  quantity: 9001
-}
+[CONFIG]
+ startLoc = Central Park NY
+ minCP = 0 >minCP setting, if left at 0, will catch all Pokemon. Adjust to your preference.
 ```
 
-This is achieved with minimal coding effort on the client's part
-(extract from `demo.py`):
+- Run launch.bat
 
-```
-  # ... Blabla define the parser
-  if args.auth == 'ptc':
-      session = api.createPTCSession(args.username, args.password, args.location)
-  elif args.auth == 'google':
-      session = api.createGoogleSession(args.username, args.password, args.location)
+- After you get the message stating that web server is running on port 5100, navigate to http://localhost:5100
 
-  if session: # do stuff
-      profile = session.getProfile()
-      logging.info(profile)
-```
+- Paste snipe coordinates (must be xxx.xxxxxx,xxx.xxxxxx format - xxx,xxxxx:xxx,xxxxxxx and other formats do not work at this time). Optionally, you can enter the name of a Pokemon to catch at this location - if left blank, the rarest Pokemon at the location will be caught automatically. If you check the 'Ignore CP' box, it will catch the Pokemon regardless of CP (Good for Pokedex filling)
 
-## Contribution
-Hell yeah!
-I'm on [Slack](https://pkre.slack.com) too
-(want an [invite](https://shielded-earth-81203.herokuapp.com)?)
-if you want to have a quick chat.
 
-I welcome all PRs but for big changes it'd be best
-to open an issue so I have some idea of what's going on.
-This thing is under heavy development after all.
+Screenshots of the tool: http://imgur.com/a/TlXyx
 
-## Protocol
-We currently use [AeonLucid's Pokemon Go Protobuf protocol](https://github.com/AeonLucid/POGOProtos).
+###CREDIT TO https://github.com/rubenvereecken/pokemongo-api for providing the API for this repo###
 
-## Contributors
-Thanks @dmadisetti for keeping this baby up and giving it the love it deserves,
-along with everybody else who took the time to set up a PR!
+#HUGE THANKS# ##TO ALL OF THE DEVS THAT WORKED ON THE UNKNOWN6 issue. Encrypt dll/so from http://pgoapi.com/ 
