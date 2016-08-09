@@ -82,12 +82,22 @@
     .inventory {
         left: 5%;
         width: 90%;
-        top: 200px;
+        top: 50px;
         position: absolute;
         height: 100%;
         margin: 0 auto;
         border: 1px solid;
         box-shadow: 0 3px 50px 0 rgba(0, 0, 0, 0.08), 0 6px 10px 0 rgba(0, 0, 0, 0.09);
+    }
+	.aboveInventory {
+		z-index:99;
+        left: 5%;
+        width: 90%;
+        top: 50px;
+        position: absolute;
+        height: 100px
+        margin: 0 auto;
+
     }
     .topNav {
         height: 100px;
@@ -131,7 +141,7 @@
 
 
     <nav>
-        <div class="nav-wrapper  indigo lighten-2">
+        <div class="nav-wrapper  indigo lighten-2" style=" z-index:99;">
             <a href="#" class="brand-logo center">PokeyPySnipe</a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="http://localhost:5100/">Snipe</a></li>
@@ -141,17 +151,26 @@
         </div>
     </nav>
 
-
-    <div class="inventory" id="inventory">
-        <br><br>
+<div class="aboveInventory" id ="aboveInventory">
+<br>
         <Center>
-
-            <form action="http://localhost:5100/release"><input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon"></form>
-            <br>
-            <font face="arial" size=8>Your Pokemon</font>
-            <br>
+		<form action="http://localhost:5100/release">
+			<font face=arial size=3>Sort By:&nbsp;</font>
+			<select id="sortBy" onchange="sortPokes()" readonly=true style="text-align:center;width:200px;"> 
+			<option value="cp">Pokemon CP</option>
+			<option value="pokemon_name">Pokemon Name</option>
+			<option value="pokemon_id">Pokemon ID</option>
+			<option value="iv">Pokemon IV</option>
+			</select>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected Pokemon"></form>
+            
         </center>
-        <br><br>
+        <br>
+		</div>
+		
+    <div class="inventory" id="inventory">
+        <br><br><br><br><br>
     </div>
 
 
@@ -180,11 +199,17 @@
         }
 
         function sortByKey(array, key) {
-            return array.sort(function(a, b) {
+		if (key=='cp' || key=='iv') {
+            return array.sort(function(b, a) {
                 var x = a[key];
                 var y = b[key];
                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-            });
+            });}
+			else {return array.sort(function(a, b) {
+                var x = a[key];
+                var y = b[key];
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            });}
         }
 
         function selectPoke(id) {
@@ -217,14 +242,16 @@
             party = data;
             //default sort is by CP
 
-            sortPokes('cp');
+            sortPokes();
         }
 
 
 
         //sort pokemon by id,pokemon_id,cp,stamina,stamina_max,move_1,move_2,etc.
-        function sortPokes(key) {
-
+        function sortPokes() {
+			key = document.getElementById('sortBy').value;
+			
+			
             document.getElementById('inventory').innerHTML = origInventory;
             sortByKey(party, key);
 
@@ -250,6 +277,9 @@
 
 
             for (var i in party) {
+				party[i].iv = (party[i].individual_attack + party[i].individual_defense + party[i].individual_stamina) / 45;
+				
+				
                 var content = document.createElement('div');
                 content.className = 'square hoverable';
                 content.id = party[i].id;
@@ -262,7 +292,23 @@
                 document.getElementById('inventory').appendChild(content);
 
             }
-        }
+			var body = document.body,
+    html = document.documentElement;
+
+	var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+        document.getElementById('inventory').style.height = height;
+		
+		
+		
+		
+		}
+		
+		
+		
+
+
+
         var origInventory = document.getElementById('inventory').innerHTML;
         var url = "/static/inventory.json?" + new Date().getTime();
         loadJSON(url,
@@ -273,6 +319,8 @@
                 console.error(xhr);
             }
         );
+		
+		
     </script>
 
 </body>
