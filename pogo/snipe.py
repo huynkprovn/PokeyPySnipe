@@ -155,8 +155,61 @@ def inventory():
 @app.route('/')
 def index():
     
+    stats = session.getInventory().stats
+    profileInfo = session.getProfile().player_data
+
+        #level
+        #experience: 2004695
+        #prev_level_xp: 1650000
+        #next_level_xp: 2500000
+        #km_walked: 29.3902397156
+        #pokemons_encountered: 4484
+        #unique_pokedex_entries: 92
+        #pokemons_captured: 4348
+        #evolutions: 614
+        #poke_stop_visits: 13337
+        #pokeballs_thrown: 4819
+        #eggs_hatched: 7
     
+    
+    if profileInfo.team:
+        
+        team = profileInfo.team
+    else:
+        team = 'noteam'
+               
+    statz = {
+    'level': str(stats.level),
+    'experience': str(stats.experience),
+    'next_level_xp': str(stats.next_level_xp),
+    'km_walked': str(stats.km_walked),
+    'pokemons_encountered': str(stats.pokemons_encountered),
+    'pokemons_captured': str(stats.pokemons_captured),
+    'username': str(profileInfo.username),
+    'max_pokemon_storage': str(profileInfo.max_pokemon_storage),
+    'max_item_storage': str(profileInfo.max_item_storage),
+    'team': team
+    
+    
+    
+                }
+        
+        
+        
+    
+    
+    
+    json.dump(statz, open('static/stats.json', 'w'))
+    
+
     return render_template('dashboard.html')
+    
+
+@app.route('/snipe')
+def snipez():
+    
+    
+    return render_template('snipe.html')
     
 
 
@@ -482,7 +535,7 @@ if __name__ == '__main__':
         config.get('AUTH','username'),
         config.get('AUTH','password'),
         config.get('AUTH','type'),
-        'encrypt.dll',
+        'encrypt/encrypt32bit.dll',
         geo_key=""
     )
 
@@ -497,8 +550,8 @@ if __name__ == '__main__':
     # Time to show off what we can do
     logging.info("Successfully logged in to Pokemon Go! Starting web server on port 5100.")
     
-    #logging.info(session.getInventory().candies)
-    
+  
+        
     app.run(host='0.0.0.0', port=5100)
     url_for('static', filename='catch_data.json')
     	
