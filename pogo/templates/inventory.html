@@ -189,7 +189,7 @@
 			<option value="pokemon_id">Pokemon ID</option>
 			<option value="iv">Pokemon IV</option>
 			</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected" name="action"> <input type=submit value="Evolve Selected" name="action"> <input type="button" id="advFilter" onclick="document.getElementById('advFilterModal').style.display = 'block'" value="Advanced Filter"></form>
+                <input type="hidden" id="pokeID" name="pokeID"><input type=submit value="Release Selected" name="action"> <input type=submit value="Evolve Selected" name="action"> <input type="button" id="advFilter" onclick="document.getElementById('advFilterModal').style.display = 'block'" value="Advanced Filter"> <input type="button" id="selectAll" onclick="selectAllPokes()" value="Select All"></form>
 
 
         </center>
@@ -325,7 +325,7 @@
                 var content = document.createElement('div');
                 content.className = 'square hoverable';
                 content.id = party[i].id;
-                content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png>\
+                content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img class="pokeSquare" style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png>\
 	<font size=2 face=arial><center>' + party[i].pokemon_name + '<br>Candies: ' + party[i].candies + '/' + party[i].reqCandies + '</font><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress></center>\
 	<br>'
 
@@ -355,16 +355,23 @@
 
                 }
             }
-			if (squareCount < 7) {
-			squareCount = 14;
-			}
-            document.getElementById('inventory').style.height = (squareCount / 7) * 340;
+			if (squareCount / 7 < .5) {
+			squareCount = (7 - squareCount) + squareCount ;
+			if(squareCount == 7) {document.getElementById('inventory').style.height = ((squareCount / 7) * 340) +100}
+			else {document.getElementById('inventory').style.height = ((squareCount / 7) * 340) ;}
+			} else if(squareCount == 7) {document.getElementById('inventory').style.height = ((squareCount / 7) * 340) +100}
+			
+			
+			else {document.getElementById('inventory').style.height = ((squareCount / 7) * 340) ;}
+            
 
 
 
             document.getElementById('pokemonName').value = "";
             document.getElementById('ivThreshold').value = 0;
             document.getElementById('cpThreshold').value = 0;
+			
+
         }
 
         var origInventory = document.getElementById('inventory').innerHTML;
@@ -377,7 +384,14 @@
                 console.error(xhr);
             }
         );
+		function selectAllPokes() {
+					var pokePokes = document.getElementsByClassName("pokeSquare");
+			for(var i = 0; i < pokePokes.length; i++)
+{
+				pokePokes.item(i).click();
+}
 
+}
         //let's clear some stuff
         document.getElementById('pokemonName').value = "";
         document.getElementById('ivThreshold').value = 0;
