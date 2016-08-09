@@ -1,0 +1,9 @@
+[AUTH]
+type = ptc # ptc or google
+username = ptcusername
+password = ptcpassword
+
+[CONFIG]
+startLoc = Central Park NY # can be a place name or coordinates
+minCP = 0 # minimum cp at which capture should be attempted
+encryptFile = encrypt64bit.dll # location of the encryption file (see pogo/encrypt/ for a list of files)

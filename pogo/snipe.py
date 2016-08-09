@@ -535,7 +535,7 @@ if __name__ == '__main__':
         config.get('AUTH','username'),
         config.get('AUTH','password'),
         config.get('AUTH','type'),
-        'encrypt/encrypt32bit.dll',
+        ''.join(['encrypt/',config.get('CONFIG', 'encryptFile')]),
         geo_key=""
     )
 
