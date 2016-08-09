@@ -71,6 +71,7 @@ def release():
     #captured_cell_id: 6108423709528162304
     #creation_time_ms: 1469364470778
     pokeID = request.args.get('pokeID', 0)
+    action = request.args.get('action',0)
     
     
     
@@ -83,10 +84,19 @@ def release():
             
             if str(curPoke.id) == str(z):
                 
-                logging.critical("Found pokemon. Transferring")
-                logging.critical(session.releasePokemon(inventory.party[poke]))
+                
+                
+                if action.find("Release") > -1:
+                    logging.critical("Found pokemon. Transfer in progress...")
+                    logging.critical(session.releasePokemon(inventory.party[poke]))
+                elif action.find("Evolve") > -1:
+                    logging.critical("Found pokemon. Evolve in progress...")
+                    logging.critical(session.evolvePokemon(inventory.party[poke]))
+                    
                 time.sleep(1)
     return render_template('inventoryTimeout.html')
+    
+
 @app.route('/inventory')
 def inventory():
     inventory = session.getInventory()
@@ -111,6 +121,11 @@ def inventory():
     for poke in range(0,len(inventory.party)-1):
         
         curPoke = inventory.party[poke]
+        if curPoke.pokemon_id in inventory.candies:
+            candies = inventory.candies[curPoke.pokemon_id]
+        else:
+            candies = 0
+            
         pokez = {
         'id': str(curPoke.id),
         'pokemon_id': curPoke.pokemon_id,
@@ -124,7 +139,8 @@ def inventory():
         'weight_kg': curPoke.weight_kg,
         'individual_attack': curPoke.individual_attack,
         'individual_defense': curPoke.individual_defense,
-        'individual_stamina': curPoke.individual_stamina
+        'individual_stamina': curPoke.individual_stamina,
+        'candies': candies
         }
         pokes.append(pokez)
         
@@ -481,6 +497,7 @@ if __name__ == '__main__':
     # Time to show off what we can do
     logging.info("Successfully logged in to Pokemon Go! Starting web server on port 5100.")
     
+    #logging.info(session.getInventory().candies)
     
     app.run(host='0.0.0.0', port=5100)
     url_for('static', filename='catch_data.json')
