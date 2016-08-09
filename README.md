@@ -20,6 +20,7 @@ Instructions:
  startLoc = Central Park NY
  minCP = 0 >minCP setting, if left at 0, will catch all Pokemon. Adjust to your preference.
 ```
+- Edit snipe.py line 485 with the proper filename (see pogo/encrypt/ for a list of files)
 
 - Run launch.bat
 
