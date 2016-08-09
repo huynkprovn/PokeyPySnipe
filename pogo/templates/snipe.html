@@ -9,7 +9,13 @@
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
+    <script type=text/javascript>
+        function updateStatus() {
+            document.getElementById('status').innerHTML = ('<center><font size=4 color=Orange><b>Attempting to snipe Pokemon. This may take some time.</center></font></b>');
+        }
+	// attach handlers once iframe is loaded
+	
+    </script>
 
     <style>
         input[type=text],
@@ -40,14 +46,8 @@
         }
         
         .main {
-		
-		background-repeat: no-repeat;
-		background-attachment: fixed;
-		background-position: center; 
-		
 		position:relative;
-            width: 800px;
-			height:800px;
+            width: 80%;
             margin: 0 auto;
             border-radius: 5px;
             background-color: #f2f2f2;
@@ -69,7 +69,6 @@
 			font-family: arial;
 			background: radial-gradient(ellipse at center,rgba(85,26,139,.4) 0,rgba(255,255,255,.18) 54%,rgba(255,255,255,0) 100%);
 			box-shadow: 0 3px 50px 0 rgba(0,0,0,0.08),0 6px 10px 0 rgba(0,0,0,0.09);
-			
 }	
 				}
 		#all{
@@ -121,7 +120,7 @@ color:white;
     <div class="nav-wrapper  indigo lighten-2">
       <a href="#" class="brand-logo center">PokeyPySnipe</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
-		<li><a href="http://localhost:5100/">Dashboard</a></li>
+	    <li><a href="http://localhost:5100/">Dashboard</a></li>
         <li><a href="http://localhost:5100/snipe">Snipe</a></li>
         <li><a href="http://localhost:5100/inventory">PokeManager</a></li>
         
@@ -129,10 +128,33 @@ color:white;
     </div>
   </nav>
         
-    <div class="main" id="main">
-        
-            
-			
+    <div class="main">
+        <center>
+            <form action="http://localhost:5100/_snipe_">
+
+                <font face="arial" size=7><b>Snipe</font></b>
+                    <br>
+                    <br>
+                    <br>
+
+                    <font face="arial" size=2><b>Snipe Coords</font></b>
+                        <br> (123.456789,123.456789)
+                        <br><input type="text" name=snipecoords id="snipecoords">
+                        <br>
+                        <br>
+						<font face="arial" size=2><b>Pokemon Name</font></b>(Optional)
+                        
+                        <br><input type="text" name=pokemonName id="pokemonName">
+                        <br>
+                        <br>
+						<input type="checkbox" name="ignoreCP" value="ignoreCP"><font face=arial>Ignore CP?</font><br>
+                        <input width="50" type=submit value="Snipe!" onclick='javascript:updateStatus();'>
+
+
+                        <br>
+						<br>
+						<span id="status"></span>
+            </form>
     </div>
     
 	
@@ -141,68 +163,7 @@ color:white;
 	
     
 
-<script type="text/javascript">
-  function loadJSON(path, success, error) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        if (success)
-                            success(JSON.parse(xhr.responseText));
-                    } else {
-                        if (error)
-                            error(xhr);
-                    }
-                }
-            };
-            xhr.open("GET", path, true);
-            xhr.send();
-        }
-		
-		
-		
-		
-		 function sculpt(data) {
-		 if(data.team == 'noteam') {
-		 document.getElementById('main').style = 'background-image: url("static/avatars/' + 'noteam.png");';
-		 } else if (data.team == '1') {
-		 document.getElementById('main').style = 'background-image: url("static/avatars/' + 'blue.png");';
-		 } else if (data.team == '2') {
-		 document.getElementById('main').style = 'background-image: url("static/avatars/' + 'red.png");';
-		 } else if (data.team == '3') {
-		 document.getElementById('main').style = 'background-image: url("static/avatars/' + 'yellow.png");';
-		 }
-			
-			document.getElementById('main').innerHTML = '<font size=6 face=arial><b>' + data.username + '</font></b><br> \
-			<font face=arial>Level ' + data.level + '</font> \
-			<br><font face=arial>KM Walked: ' + data.km_walked + '</font> \
-			<br><font face=arial>Pokemon Encountered: ' + data.pokemons_encountered + '</font> \
-			<br><font face=arial>Pokemon Captured: ' + data.pokemons_captured + '</font> \
-			<br><font face=arial>Capture Rate: ' + (Math.round((parseInt(data.pokemons_captured) / parseInt(data.pokemons_encountered))*100)) + '%</font>';
-			
-			
-            
-        }
-		
-		
-		
-		
-		
-		
-		var url = "/static/stats.json?" + new Date().getTime();
-        loadJSON(url,
-            function(data) {
-                sculpt(data);
-            },
-            function(xhr) {
-                console.error(xhr);
-            }
-        );
-		
-		
-		
-		</script>
-		
+
 
 
 
