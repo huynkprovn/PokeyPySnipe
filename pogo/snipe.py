@@ -118,13 +118,26 @@ def inventory():
     #captured_cell_id: 6108423709528162304
     #creation_time_ms: 1469364470778
     
+    
     for poke in range(0,len(inventory.party)-1):
         
-        curPoke = inventory.party[poke]
-        if curPoke.pokemon_id in inventory.candies:
-            candies = inventory.candies[curPoke.pokemon_id]
+    
+        family = {'1': {1,2,3},'4': {4,5,6},'7': {7,8,9}, '10': {10,11,12}, '13': {13,14,15}, '16': {16,17,18}, '19': {19,20}, '21': {21,22}, '23': {23,24},'25': {25,26}, '27': {27,28}, '29': {29,30,31}, '32': {32,33,34}, '35': {35,36}, '37': {37,38}, '39': {39,40}, '41': {41,42}, '43': {43,44,45}, '46': {46,47}, '48': {48,49}, '50': {50,51}, '52': {52,53},'54': {54,55}, '56': {56,57}, '58': {58,59}, '60': {60,61,62}, '63': {63,64,65}, '66': {66,67,68},'69': {69,70,71}, '72': {72,73}, '74': {74,75,76}, '77': {77,78}, '79': {79,80}, '81': {81,82,83}, '84': {84,85}, '86': {86,87}, '88': {88,89}, '90': {90,91}, '92': {92,93,94}, '95': {95}, '96': {96,97}, '98': {98,99}, '100': {100,101}, '102': {102,103}, '104': {104,105}, '106': {106}, '107': {107},'108': {108}, '109': {109,110}, '111': {111,112}, '113': {113}, '114': {114}, '115': {115}, '116': {116,117}, '118': {118,119}, '120': {120,121},'122': {122}, '123': {123}, '124': {124}, '125': {125}, '126': {126}, '127': {127}, '128': {128}, '129': {129,130}, '131': {131}, '132': {132}, '133': {133,134,135,136},'137': {137}, '138': {138,139}, '140': {140,141},'142': {142}, '143': {143}, '144': {144}, '145': {145}, '146':{146}, '147': {147,148,149}, '150': {150}, '151': {151}}
+    
+        
+        curPoke = inventory.party[poke]    
+        if str(curPoke.pokemon_id) not in family:
+            
+            for z in family:
+                
+                if curPoke.pokemon_id in family[z]:
+                    #logging.critical(str(pokedex[curPoke.pokemon_id]) + " is in family " +str(z))
+                    #logging.critical(inventory.candies)
+                    candies = inventory.candies[int(z)]
         else:
-            candies = 0
+            #logging.critical(str(curPoke.pokemon_id) + " is a family!")
+            candies = inventory.candies[curPoke.pokemon_id]
+        
             
         pokez = {
         'id': str(curPoke.id),
@@ -550,8 +563,6 @@ if __name__ == '__main__':
     # Time to show off what we can do
     logging.info("Successfully logged in to Pokemon Go! Starting web server on port 5100.")
     
-  
-        
     app.run(host='0.0.0.0', port=5100)
     url_for('static', filename='catch_data.json')
     	
