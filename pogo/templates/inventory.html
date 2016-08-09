@@ -61,8 +61,8 @@
         }
         
         .square {
-            width: 110px;
-            height: 300px;
+            width: 140px;
+            height: 310px;
             padding: 10px;
             position: relative;
             margin: 10px;
@@ -81,7 +81,7 @@
     }
     .inventory {
         left: 5%;
-        width: 90%;
+        width: 1130px;
         top: 50px;
         position: absolute;
         height: 100%;
@@ -285,8 +285,8 @@
                 var content = document.createElement('div');
                 content.className = 'square hoverable';
                 content.id = party[i].id;
-                content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img onclick=\"javascript:selectPoke(this);\" height=100 width=100 src=static/avatars/' + party[i].pokemon_id + '.png>\
-	<font size=2 face=arial><center>' + party[i].pokemon_name + '<br>Candies: ' + party[i].candies + '</font><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress></center>\
+                content.innerHTML = '<font face=arial size=4><b> <center>' + party[i].cp + '</center></b></font><img style="padding:10px;" onclick=\"javascript:selectPoke(this);\" height=120 width=120 src=static/avatars/' + party[i].pokemon_id + '.png>\
+	<font size=2 face=arial><center>' + party[i].pokemon_name + '<br>Candies: ' + party[i].candies + '/'+ party[i].reqCandies + '</font><br><font size=2 face=arial>Attack IV<br><progress value=' + party[i].individual_attack + ' max="15"></progress><br><font size=2 face=arial>Defense IV<br><progress value=' + party[i].individual_defense + ' max="15"></progress><br><font size=2 face=arial>Stamina IV<br><progress value=' + party[i].individual_stamina + ' max="15"></progress></center>\
 	<br>'
 
 
