@@ -1,4 +1,7 @@
-config.ini
+pogo/config.ini
+pogo/static/catch_data.json
+pogo/static/inventory.json
+pogo/static/stats.json
 
 dumps
 *.pyc
