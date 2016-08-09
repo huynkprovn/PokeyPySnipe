@@ -9,18 +9,7 @@ Instructions:
 
 >If you get an error 'failed to build xxhash' while installing requirements.txt, please install this file and try again: http://www.microsoft.com/en-us/download/details.aspx?id=44266
 
-- Edit \pogo\config.ini with your information:
-```
-[AUTH]
- type = ptc or google
- username = username
- password = password
-
-[CONFIG]
- startLoc = Central Park NY
- minCP = 0 >minCP setting, if left at 0, will catch all Pokemon. Adjust to your preference.
- encryptFile = encrypt64bit.dll (see pogo/encrypt/ for a list of files)
-```
+- Edit ```config.ini.example``` with your options and then rename to ```config.ini```
 
 - Run launch.bat
 
